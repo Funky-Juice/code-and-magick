@@ -71,6 +71,13 @@ app.get(projectNameToAPIURL.get(projectName), (req, res) => {
 
 app.use(serve);
 
+// Форма отзыва отправляется методом POST на index.html.
+// Статика отвечает только на GET, поэтому без этого маршрута
+// браузер получает 404 с Content-Security-Policy: default-src 'none'.
+app.post(['/', '/index.html'], (req, res) => {
+  res.redirect(303, '/');
+});
+
 
 app.listen(PORT, '0.0.0.0', (err) => {
   exitIfError(err);
