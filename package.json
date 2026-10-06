@@ -13,28 +13,29 @@
   },
   "homepage": "https://github.com/htmlacademy-javascript/59949-code-and-magick",
   "devDependencies": {
-    "colors": "1.1.2",
-    "copy-webpack-plugin": "^3.0.1",
-    "eslint": "3.2.0",
-    "eslint-plugin-requirejs": "2.0.1",
-    "express": "4.14.0",
-    "finalhandler": "0.5.0",
-    "http-server": "0.9.0",
-    "imagemagick": "0.1.3",
-    "log4js": "0.6.37",
-    "opener": "1.4.1",
-    "phantomjs-prebuilt": "2.1.7",
-    "webpack": "1.13.2",
-    "webpack-dev-middleware": "1.6.1"
+    "colors": "^1.4.0",
+    "copy-webpack-plugin": "^14.0.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-requirejs": "^4.0.1",
+    "express": "^5.2.1",
+    "finalhandler": "^2.1.1",
+    "glob": "^13.0.6",
+    "globals": "^17.13.0",
+    "http-server": "^14.1.1",
+    "imagemagick": "^0.1.3",
+    "log4js": "^6.9.1",
+    "opener": "^1.5.2",
+    "webpack": "^5.111.1",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-middleware": "^8.3.0"
   },
-  "dependencies": {},
   "scripts": {
     "build": "webpack --config ./bin/webpack.config.js",
     "start": "node ./bin/server.js code-and-magick",
     "test": "node tests/lib/index.js"
   },
   "engines": {
-    "node": "^5.11.0"
+    "node": ">=18"
   },
   "openBrowser": false
 }

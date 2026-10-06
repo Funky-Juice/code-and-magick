@@ -2,7 +2,6 @@
 
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const fs = require('fs');
 const path = require('path');
 
 const projectRoot = path.resolve(__dirname, '..');
@@ -11,27 +10,30 @@ const SRC_DIRNAME = path.resolve(projectRoot, 'src');
 
 
 module.exports = {
-  devServer: {
-    contentBase: OUTPUT_DIRNAME,
-    entryPath: SRC_DIRNAME
-  },
+  mode: 'development',
 
-  devtool: 'sourcemap',
+  devtool: 'source-map',
 
   entry: path.resolve(SRC_DIRNAME, 'js/main.js'),
 
   output: {
+    clean: true,
     filename: 'js/[name].js',
-    outputPath: '/',
     path: OUTPUT_DIRNAME,
-    sourceMapFilename: "[file].map?dropcache"
+    publicPath: '/',
+    sourceMapFilename: '[file].map'
   },
 
   plugins: [
-    new CopyWebpackPlugin([
-      { from: `${SRC_DIRNAME}`, to: `${OUTPUT_DIRNAME}` }
-    ], {
-      ignore: [`${SRC_DIRNAME}/js`]
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: SRC_DIRNAME,
+          globOptions: {
+            ignore: ['**/js/**']
+          }
+        }
+      ]
     })
   ]
 };

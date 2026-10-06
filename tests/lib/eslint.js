@@ -41,32 +41,40 @@ var reportESLintErrors = function(results) {
 };
 
 module.exports = function runESLint(eslintConfig, paths) {
-  var CLIEngine = require('eslint').CLIEngine;
+  var ESLint = require('eslint').ESLint;
 
   var exit = process.exit;
 
-  var cli = new CLIEngine(eslintConfig);
+  var cli = new ESLint(eslintConfig);
 
-  var report = cli.executeOnFiles(paths);
+  return cli.lintFiles(paths).then(function(results) {
+    var errorCount = 0;
+    var warningCount = 0;
 
-  var pluralize = function(word, count) {
-    if(count > 1) {
-      return '' + count + ' ' + word + 's';
-    } else {
-      return '' + count + ' ' + word;
+    results.forEach(function(result) {
+      errorCount += result.errorCount;
+      warningCount += result.warningCount;
+    });
+
+    var pluralize = function(word, count) {
+      if(count > 1) {
+        return '' + count + ' ' + word + 's';
+      } else {
+        return '' + count + ' ' + word;
+      }
+    };
+
+    if(errorCount > 0) {
+      reportESLintErrors(results);
+
+      console.log(('× ' + pluralize('problem',
+        errorCount + warningCount) +
+        ' ' + pluralize('error', errorCount) + ', ' +
+        pluralize('warning', warningCount)).red.bold
+      );
+
+      exit(1);
     }
-  };
-
-  if(report.errorCount > 0) {
-    reportESLintErrors(report.results);
-
-    console.log(('× ' + pluralize('problem',
-      report.errorCount + report.warningCount) +
-      ' ' + pluralize('error', report.errorCount) + ', ' +
-      pluralize('warning', report.warningCount)).red.bold
-    );
-
-    exit(1);
-  }
+  });
 };
 

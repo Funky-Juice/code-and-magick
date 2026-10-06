@@ -40,10 +40,10 @@ rules:
   no-label-var: 2
   no-labels: 2
   no-lone-blocks: 2
-  no-mixed-spaces-and-tabs: [2, false]
+  no-mixed-spaces-and-tabs: 2
   no-multi-spaces: 2
   no-multi-str: 2
-  no-native-reassign: 2
+  no-global-assign: 2
   no-nested-ternary: 2
   no-new: 2
   no-new-func: 2
@@ -51,7 +51,6 @@ rules:
   no-new-wrappers: 2
   no-octal: 2
   no-octal-escape: 2
-  no-process-exit: 2
   no-proto: 2
   no-redeclare: 2
   no-return-assign: 2
@@ -59,7 +58,7 @@ rules:
   no-sequences: 2
   no-shadow: 2
   no-shadow-restricted-names: 2
-  no-spaced-func: 2
+  func-call-spacing: [2, "never"]
   no-trailing-spaces: 2
   no-undef: 2
   no-undef-init: 2
@@ -77,11 +76,3 @@ rules:
   space-unary-ops: [2, {words: true, nonwords: false}]
   strict: [2, "global"]
   yoda: [2, "never"]
-
-  # Previously on by default in node environment
-  no-catch-shadow: 0
-  no-mixed-requires: 2
-  no-new-require: 2
-  no-path-concat: 2
-  global-strict: [0, "always"]
-  handle-callback-err: [2, "err"]

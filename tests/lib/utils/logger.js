@@ -7,19 +7,27 @@ var config = require('../config');
 var level = config.log_level;
 
 log4js.configure({
-  appenders: [
-    {
+  appenders: {
+    console: {
       type: 'console',
-      category: 'basic',
       layout: {
         type: 'pattern',
         pattern: '%[%r %5.5p: %m%]'
       }
     }
-  ]
+  },
+  categories: {
+    default: {
+      appenders: ['console'],
+      level: level
+    },
+    basic: {
+      appenders: ['console'],
+      level: level
+    }
+  }
 });
 
 var logger = log4js.getLogger('basic');
-logger.setLevel(level);
 
 module.exports = logger;

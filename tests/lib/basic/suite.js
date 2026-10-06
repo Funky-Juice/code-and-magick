@@ -17,6 +17,10 @@ var path = require('path');
 var fs = require('fs');
 var glob = require('glob');
 
+var globSync = function(pattern) {
+  return glob.globSync(String(pattern).split('\\').join('/'));
+};
+
 var metaInfo = {};
 
 var PhantomTest = require('./phantom-test');
@@ -118,7 +122,7 @@ sp.run = function() {
 
 sp._getTestFolders = function(prefix) {
   var testsRoot = path.resolve(config.tests_root);
-  var paths = glob.sync(testsRoot + '/module*-task*');
+  var paths = globSync(testsRoot + '/module*-task*');
   var suite = this;
 
   return (
@@ -130,7 +134,7 @@ sp._getTestFolders = function(prefix) {
       var tests;
 
       if(typeof(prefix) === 'string') {
-        tests = glob.sync(path.join(fullPath, prefix + '*.js'));
+        tests = globSync(path.join(fullPath, prefix + '*.js'));
 
         if(tests.length === 0) {
           return false;
@@ -210,7 +214,7 @@ sp._getPhantomTestsInFolders = function(folders) {
 };
 
 sp._getNodeTestIn = function(folder) {
-  var testPath = glob.sync(path.join(folder, 'node-*.js'))[0];
+  var testPath = globSync(path.join(folder, 'node-*.js'))[0];
   var test = require(testPath);
 
   var testResult = test();
@@ -225,7 +229,7 @@ sp._getNodeTestIn = function(folder) {
 };
 
 sp._getPhantomTestIn = function(folder) {
-  var testPath = glob.sync(path.join(folder, 'phantom-*.js'))[0];
+  var testPath = globSync(path.join(folder, 'phantom-*.js'))[0];
   var taskName = path.basename(folder);
 
   logger.debug('_getPhantomTestIn()');

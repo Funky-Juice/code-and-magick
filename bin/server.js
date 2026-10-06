@@ -50,8 +50,8 @@ const readBrowserOpenConfig = () => {
 };
 
 
-const serve = serveStatic(webpackConfig.devServer.contentBase, {
-  'index': ['index.html', 'index.htm']
+const serve = serveStatic(webpackConfig.output.path, {
+  index: ['index.html', 'index.htm']
 });
 const app = express();
 const compiler = webpack(webpackConfig);
@@ -67,7 +67,9 @@ app.get(projectNameToAPIURL.get(projectName), (req, res) => {
     console.error('Ошибка при запросе к API', err.message);
     res.status(500).send(err);
   });
-}).get('*', serve);
+});
+
+app.use(serve);
 
 
 app.listen(PORT, '0.0.0.0', (err) => {
