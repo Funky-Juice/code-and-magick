@@ -270,17 +270,6 @@ var form = {
 
 reviewAddBtn.addEventListener('click', function() {
   window.addEventListener('keydown', onCloseKeydownHandler);
-
-  var reviewMarkCookie = window.Cookies.get('review-mark');
-
-  for(var i = 0; i < reviewMarkAll.length; i++) {
-    if (reviewMarkAll[i].value === reviewMarkCookie) {
-      reviewMarkAll[i].checked = true;
-    }
-  }
-
-  reviewNameField.value = window.Cookies.get('review-name') || '';
-
   formValidation();
 });
 
@@ -298,8 +287,12 @@ reviewTextField.oninput = function() {
   formValidation();
 };
 
-reviewSubmitBtn.addEventListener('click', function() {
+formContainer.querySelector('form').addEventListener('submit', function(evt) {
+  evt.preventDefault();
   utilities.setCookie();
+  evt.target.reset();
+  window.removeEventListener('keydown', onCloseKeydownHandler);
+  form.close();
 });
 
 formCloseButton.onclick = function(evt) {
@@ -1045,7 +1038,7 @@ Game.prototype = {
         this.wrapText(this.ctx, text, marginLeft, marginTop, marginRight, maxMessageWidth, lineHeight);
         break;
       case Verdict.INTRO:
-        text = 'Добро пожаловать в игру! Используйте стрелки для перемещения и shift для стрельбы!';
+        text = 'Используйте стрелки для перемещения и shift для стрельбы! Для начала игры нажмите пробел!';
         this.drawBaloon(x, y, lineHeight, this.getRowsCount(this.ctx, text, marginRight, maxMessageWidth));
         this.wrapText(this.ctx, text, marginLeft, marginTop, marginRight, maxMessageWidth, lineHeight);
         break;
